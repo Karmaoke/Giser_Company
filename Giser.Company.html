@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giser Company</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-message {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .form-container {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .btn {
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #3a7bd5, #00d2ff);
+            margin-top: 10px;
+        }
+        
+        .btn-tertiary {
+            background: linear-gradient(to right, #56ab2f, #a8e063);
+            margin-top: 10px;
+        }
+        
+        .menu {
+            display: none;
+            text-align: center;
+        }
+        
+        .menu-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .market-section {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        .market-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .market-btn {
+            width: 48%;
+            padding: 10px;
+        }
+        
+        .application-form {
+            display: none;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .application-form h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .application-form p {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .empty-market {
+            text-align: center;
+            padding: 30px;
+            font-size: 1.2rem;
+        }
+        
+        .profile-section {
+            display: none;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(to right, #ff9966, #ff5e62);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .profile-info {
+            flex-grow: 1;
+        }
+        
+        .success-message {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 15px;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-info {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loading-spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #fff;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Giser Company</h1>
+            <div class="subtitle">Матрешка рп💜</div>
+        </header>
+        
+        <div class="welcome-message">
+            Добро пожаловать в Giser Company! Мы предоставляем услуги по торговле виртами и подготовке к обзвону.
+        </div>
+        
+        <div id="authSection">
+            <button class="btn" onclick="showRegisterForm()">Зарегистрироваться</button>
+            <button class="btn btn-secondary" onclick="showLoginForm()">Войти</button>
+        </div>
+        
+        <div id="registerForm" class="form-container">
+            <h2>Регистрация</h2>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" placeholder="Введите ваш email">
+            </div>
+            <div class="form-group">
+                <label for="username">Никнейм:</label>
+                <input type="text" id="username" placeholder="Придумайте никнейм">
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" placeholder="Придумайте пароль">
+            </div>
+            <button class="btn" onclick="register()">Зарегистрироваться</button>
+            <button class="btn btn-secondary" onclick="showAuthSection()">Назад</button>
+        </div>
+        
+        <div id="loginForm" class="form-container">
+            <h2>Вход</h2>
+            <div class="form-group">
+                <label for="loginEmail">Email:</label>
+                <input type="email" id="loginEmail" placeholder="Введите ваш email">
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Пароль:</label>
+                <input type="password" id="loginPassword" placeholder="Введите ваш пароль">
+            </div>
+            <button class="btn" onclick="login()">Войти</button>
+            <button class="btn btn-secondary" onclick="showAuthSection()">Назад</button>
+        </div>
+        
+        <div id="menuSection" class="menu">
+            <h2>Добро пожаловать, <span id="userName"></span>!</h2>
+            <div class="user-info">Email: <span id="userEmail"></span></div>
+            
+            <div class="menu-item" onclick="showProfile()">
+                <h3>Профиль</h3>
+                <p>Измените аватар и информацию о себе</p>
+            </div>
+            
+            <div class="menu-item" onclick="showMarket()">
+                <h3>Продажа/покупка виртов</h3>
+                <p>Купить или продать вирты</p>
+            </div>
+            
+            <div class="menu-item" onclick="alert('Раздел в разработке')">
+                <h3>Подготовка к обзвону</h3>
+                <p>Материалы для подготовки</p>
+            </div>
+            
+            <div class="menu-item" onclick="alert('Раздел в разработке')">
+                <h3>Купить прохождение обзвона</h3>
+                <p>Заказать услугу</p>
+            </div>
+            
+            <button class="logout-btn" onclick="logout()">Выйти</button>
+        </div>
+        
+        <div id="profileSection" class="form-container">
+            <h2>Ваш профиль</h2>
+            <div class="profile-header">
+                <div class="avatar" id="avatarPlaceholder">U</div>
+                <div class="profile-info">
+                    <h3 id="profileUsername"></h3>
+                    <p>Измените информацию о себе</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="about">О себе:</label>
+                <textarea id="about" rows="3" placeholder="Расскажите о себе"></textarea>
+            </div>
+            
+            <button class="btn" onclick="updateProfile()">Сохранить</button>
+            <button class="btn btn-secondary" onclick="showMenu()">Назад в меню</button>
+        </div>
+        
+        <div id="marketSection" class="market-section">
+            <h2>Рынок виртов</h2>
+            
+            <div class="market-options">
+                <button class="btn market-btn" onclick="showBuyMarket()">Купить вирты</button>
+                <button class="btn market-btn btn-tertiary" onclick="showSellForm()">Продать вирты</button>
+            </div>
+            
+            <div id="buyMarket">
+                <div class="empty-market">
+                    <h3>Рынок пуст</h3>
+                    <p>В настоящее время нет доступных предложений</p>
+                </div>
+            </div>
+            
+            <div id="sellForm" class="application-form">
+                <h3>Заявка на продажу виртов</h3>
+                <p>Для того чтобы выставить вирты на продажу, вы должны перевести вирты на счет Giser Company. Мы храним их и когда находится покупатель, мы передаем ему вирты, забираем у него деньги и переводим деньги вам.</p>
+                <p>Мы действуем пока что только на 05 сервере</p>
+                <p>Наш счет в игре: <strong>GiserCompany_05</strong></p>
+                
+                <div class="form-group">
+                    <label for="nickname">Ваш ник:</label>
+                    <input type="text" id="nickname" placeholder="Введите ваш игровой ник">
+                </div>
+                
+                <div class="form-group">
+                    <label for="card">Номер карты (Сбер, Тинькофф и т.д.):</label>
+                    <input type="text" id="card" placeholder="Введите номер карты для оплаты">
+                </div>
+                
+                <div class="form-group">
+                    <label for="screenshot">Скрин перевода виртов (вставьте ссылку на изображение):</label>
+                    <input type="text" id="screenshot" placeholder="Ссылка на скриншот">
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Стоимость виртов:</label>
+                    <input type="number" id="amount" placeholder="Укажите стоимость">
+                </div>
+                
+                <div class="loading" id="loadingIndicator">
+                    <div class="loading-spinner"></div>
+                    <p>Отправка заявки...</p>
+                </div>
+                
+                <button class="btn" onclick="submitApplication()">Отправить заявку</button>
+                <button class="btn btn-secondary" onclick="showMarket()">Назад</button>
+            </div>
+            
+            <button class="btn btn-secondary" onclick="showMenu()">Назад в меню</button>
+        </div>
+        
+        <div id="successMessage" class="success-message">
+            Ваша заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.
+        </div>
+    </div>
+
+    <script>
+        // Текущий пользователь
+        let currentUser = null;
+        
+        // Функции отображения/скрытия разделов
+        function showAuthSection() {
+            document.getElementById('authSection').style.display = 'block';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('menuSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('marketSection').style.display = 'none';
+            document.getElementById('successMessage').style.display = 'none';
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'none';
+        }
+        
+        function showLoginForm() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+        }
+        
+        function showMenu() {
+            document.getElementById('authSection').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('menuSection').style.display = 'block';
+            document.getElementById('profileSection').style.display = 'none';
+            document.getElementById('marketSection').style.display = 'none';
+            
+            if (currentUser) {
+                document.getElementById('userName').textContent = currentUser.username;
+                document.getElementById('userEmail').textContent = currentUser.email;
+            }
+        }
+        
+        function showProfile() {
+            document.getElementById('menuSection').style.display = 'none';
+            document.getElementById('profileSection').style.display = 'block';
+            
+            if (currentUser) {
+                document.getElementById('profileUsername').textContent = currentUser.username;
+                document.getElementById('about').value = currentUser.about || '';
+            }
+        }
+        
+        function showMarket() {
+            document.getElementById('menuSection').style.display = 'none';
+            document.getElementById('marketSection').style.display = 'block';
+            document.getElementById('buyMarket').style.display = 'block';
+            document.getElementById('sellForm').style.display = 'none';
+        }
+        
+        function showBuyMarket() {
+            document.getElementById('buyMarket').style.display = 'block';
+            document.getElementById('sellForm').style.display = 'none';
+        }
+        
+        function showSellForm() {
+            document.getElementById('buyMarket').style.display = 'none';
+            document.getElementById('sellForm').style.display = 'block';
+        }
+        
+        // Функции работы с пользователем
+        function register() {
+            const email = document.getElementById('email').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !username || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // В реальном приложении здесь был бы запрос к серверу
+            // Сохраняем пользователя в localStorage для демонстрации
+            const user = {
+                email,
+                username,
+                password, // В реальном приложении пароль должен хэшироваться
+                about: ''
+            };
+            
+            localStorage.setItem('user_' + email, JSON.stringify(user));
+            currentUser = user;
+            
+            showMenu();
+        }
+        
+        function login() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // В реальном приложении здесь был бы запрос к серверу
+            const userData = localStorage.getItem('user_' + email);
+            
+            if (!userData) {
+                alert('Пользователь с таким email не найден');
+                return;
+            }
+            
+            const user = JSON.parse(userData);
+            
+            if (user.password !== password) {
+                alert('Неверный пароль');
+                return;
+            }
+            
+            currentUser = user;
+            showMenu();
+        }
+        
+        function logout() {
+            currentUser = null;
+            showAuthSection();
+        }
+        
+        function updateProfile() {
+            const about = document.getElementById('about').value;
+            
+            if (currentUser) {
+                currentUser.about = about;
+                
+                // Обновляем данные в localStorage
+                localStorage.setItem('user_' + currentUser.email, JSON.stringify(currentUser));
+                
+                alert('Профиль успешно обновлен');
+                showMenu();
+            }
+        }
+        
+        function submitApplication() {
+            const nickname = document.getElementById('nickname').value;
+            const card = document.getElementById('card').value;
+            const screenshot = document.getElementById('screenshot').value;
+            const amount = document.getElementById('amount').value;
+            
+            if (!nickname || !card || !screenshot || !amount) {
+                alert('Пожалуйста, заполните все поля');
+                return;
+            }
+            
+            // Показываем индикатор загрузки
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            // Создаем скрытую форму для отправки на email через FormSubmit
+            const form = document.createElement('form');
+            form.style.display = 'none';
+            form.method = 'POST';
+            form.action = 'https://formsubmit.co/zuzu666527@gmail.com';
+            
+            // Добавляем поля формы
+            const addField = (name, value) => {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = name;
+                input.value = value;
+                form.appendChild(input);
+            };
+            
+            addField('_subject', 'Новая заявка на продажу виртов от ' + nickname);
+            addField('_replyto', currentUser.email);
+            addField('Никнейм', nickname);
+            addField('Номер карты', card);
+            addField('Скриншот перевода', screenshot);
+            addField('Стоимость виртов', amount + ' руб.');
+            addField('Email пользователя', currentUser.email);
+            addField('Имя пользователя', currentUser.username);
+            addField('Дата заявки', new Date().toLocaleString());
+            addField('_template', 'table');
+            addField('_captcha', 'false');
+            addField('_next', 'https://yourwebsite.com/success.html'); // Замените на ваш URL
+            
+            // Добавляем форму на страницу и отправляем
+            document.body.appendChild(form);
+            
+            // Имитируем небольшую задержку для лучшего UX
+            setTimeout(() => {
+                form.submit();
+                
+                // Показываем сообщение об успехе
+                document.getElementById('successMessage').style.display = 'block';
+                document.getElementById('sellForm').style.display = 'none';
+                document.getElementById('loadingIndicator').style.display = 'none';
+                
+                // Очищаем форму
+                document.getElementById('nickname').value = '';
+                document.getElementById('card').value = '';
+                document.getElementById('screenshot').value = '';
+                document.getElementById('amount').value = '';
+                
+                // Сохраняем заявку в localStorage для истории
+                const applicationData = {
+                    nickname,
+                    card,
+                    screenshot,
+                    amount,
+                    user: currentUser.username,
+                    email: currentUser.email,
+                    date: new Date().toLocaleString()
+                };
+                
+                const applications = JSON.parse(localStorage.getItem('applications') || '[]');
+                applications.push(applicationData);
+                localStorage.setItem('applications', JSON.stringify(applications));
+            }, 1500);
+        }
+        
+        // Инициализация при загрузке
+        showAuthSection();
+    </script>
+</body>
+</html>
